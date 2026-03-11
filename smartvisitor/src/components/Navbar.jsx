@@ -1,12 +1,13 @@
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { Shield, Menu, X, Home, UserPlus, Scan, LayoutDashboard } from "lucide-react"
+import { Shield, Menu, X, Home, UserPlus, Scan, LayoutDashboard, BadgeCheck } from "lucide-react"
 
 const navLinks = [
   { to: "/", label: "Home", icon: Home },
   { to: "/register", label: "Register", icon: UserPlus },
   { to: "/scanner", label: "Gate Scanner", icon: Scan },
   { to: "/admin", label: "Admin", icon: LayoutDashboard },
+  { to: "/home/pass", label: "My Visitor Pass", icon: BadgeCheck },
 ]
 
 export default function Navbar() {

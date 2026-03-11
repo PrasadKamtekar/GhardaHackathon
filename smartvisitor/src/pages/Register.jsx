@@ -1,21 +1,44 @@
 import { useNavigate } from "react-router-dom";
-import Stepper from "../components/Stepper";
+import { useVisitor } from "../context/VisitorContext.jsx";
 
 function Register() {
   const navigate = useNavigate();
+  const { setVisitor } = useVisitor();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/home/training"); // move to next step
+    const formData = new FormData(e.currentTarget);
+    const fullName = formData.get("fullName")?.toString() ?? "";
+    const company = formData.get("company")?.toString() ?? "";
+    const mobile = formData.get("mobile")?.toString() ?? "";
+    const email = formData.get("email")?.toString() ?? "";
+    const department = formData.get("department")?.toString() ?? "";
+    const purpose = formData.get("purpose")?.toString() ?? "";
+
+    const now = new Date();
+    const visitorId = `VIS-${now.getTime()}`;
+
+    setVisitor({
+      id: visitorId,
+      fullName,
+      company,
+      mobile,
+      email,
+      department,
+      purpose,
+      visitDate: now.toISOString(),
+      selfieDataUrl: null,
+    });
+
+    navigate("/home/selfie");
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center bg-linear-to-b from-slate-50 to-white px-4 py-10">
+    <div className="w-full flex justify-center px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg rounded-2xl border border-slate-200/70 bg-white/80 p-8 shadow-xl shadow-slate-200/60 backdrop-blur transition-shadow duration-300 hover:shadow-2xl hover:shadow-slate-200/70"
+        className="my-8 w-full max-w-lg rounded-2xl border border-slate-200/70 bg-white/80 p-8 shadow-xl shadow-slate-200/60 backdrop-blur transition-shadow duration-300 hover:shadow-2xl hover:shadow-slate-200/70"
       >
-        <Stepper currentStep={0} />
         <div className="mb-6">
           <h1 className="text-2xl font-semibold text-gray-900">
             Visitor Registration
